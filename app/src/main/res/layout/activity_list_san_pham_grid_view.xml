@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+
+    >
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_weight="1"
+        android:id="@+id/id_listview"
+        android:layout_width="match_parent"
+        android:layout_height="850dp">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!--    <ListView-->
+    <!--        android:id="@+id/lv_listview"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="850dp"-->
+    <!--        android:layout_weight="1"-->
+
+    <!--        android:listSelector="#D9FFFC"-->
+    <!--        >-->
+
+    <!--    </ListView>-->
+
+    <ImageButton
+
+        android:id="@+id/imgButton_add"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00B8D4"
+
+
+        app:srcCompat="@drawable/icon_add" />
+
+
+</LinearLayout>

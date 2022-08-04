@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#07D8F8"
+    android:orientation="vertical"
+    android:paddingBottom="50dp">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <EditText
+            android:id="@+id/etTensp"
+            android:layout_width="match_parent"
+
+
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/botron_edittext"
+            android:ems="10"
+            android:hint="Tên Sản Phẩm"
+            android:inputType="textUri"
+            android:paddingLeft="30dp" />
+
+        <EditText
+            android:id="@+id/etGia"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/botron_edittext"
+            android:ems="10"
+            android:hint="Giá"
+            android:inputType="number"
+            android:paddingLeft="30dp"
+            android:text="0" />
+
+        <EditText
+            android:id="@+id/etMota"
+            android:layout_width="match_parent"
+
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+
+            android:background="@drawable/botron_edittext"
+            android:ems="10"
+            android:hint="Mô Tả"
+            android:paddingLeft="30dp" />
+
+
+        <Button
+            android:id="@+id/btnChonhinh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:background="@drawable/botron_edittext"
+            android:text="Chọn Hình" />
+
+        <ImageView
+            android:id="@+id/iv_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/icon_add" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/botron_edittext"
+            android:backgroundTint="#C51162"
+            android:text="THÊM"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>
