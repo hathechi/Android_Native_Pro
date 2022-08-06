@@ -5,12 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class RegisterDBhelper extends SQLiteOpenHelper {
-    public static final String DB_NAME = "sqlProduct";
-    public static final int DB_VERSION = 1;
-    public static final String ID = "id";
-    public static final String TEN = "tensp";
-    public static final String GIA = "giasp";
-    public static final String MOTA = "mota";
 
     //table register
     public static final String DB_NAME1 = "sqlRegister";

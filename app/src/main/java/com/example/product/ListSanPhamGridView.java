@@ -128,6 +128,10 @@ public class ListSanPhamGridView extends AppCompatActivity {
                             product.setTenSp(tensp);
                             product.setGiaSp(giasp);
                             product.setMoTA(mota);
+                            if (img == null) {
+                                Toast.makeText(v.getContext(), "NHẬP ĐỦ DỮ LIỆU", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             product.setImageSp(img);
                             dao.insertProduct(product);
                             //gọi lại hàm Change

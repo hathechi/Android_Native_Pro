@@ -26,7 +26,7 @@ public class ViewPaper extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull @NotNull TabLayout.Tab tab, int position) {
-                String title[]={"Chức Năng 1","Chức Năng 2"};
+                String title[]={"Danh Sách 1","Danh Sách 2"};
                 tab.setText(title[position]);
             }
         }).attach();

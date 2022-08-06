@@ -1,11 +1,8 @@
 package com.example.product.Adapter;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
-import com.example.product.ForgotPassword;
-import com.example.product.Fragment.FragmentOne;
+import com.example.product.Fragment.FragmentTwo;
 import com.example.product.JavaClass.Product;
 import com.example.product.ListSanPham;
 import com.example.product.ListSanPhamGridView;
@@ -35,19 +31,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 // implment Filterable để tìm kiếm
-public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<ProductAdapterGridViewViewPager.ProductViewHoder> implements Filterable {
+public class ProductAdapterViewPager extends RecyclerView.Adapter<ProductAdapterViewPager.ProductViewHoder> implements Filterable {
     // tạo biến môi trường ở đây để gọi hàm ở ativity khác
-    private Context mcontext;
-    private FragmentOne listSanPhamGridView;
+    private FragmentTwo listSanPham;
     private List<Product> mProduct;
     private List<Product> mProductSearch; // list trung gian để tìm kiếm
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-
-    public ProductAdapterGridViewViewPager(FragmentOne listSanPhamGridView, List<Product> mProduct) {
+    public ProductAdapterViewPager(FragmentTwo listSanPham, List<Product> mProduct) {
         this.mProduct = mProduct;
-
-        this.listSanPhamGridView = listSanPhamGridView;
+        this.listSanPham = listSanPham;
         this.mProductSearch = mProduct;  // list trung gian để tìm kiếm
     }
 
@@ -55,13 +48,13 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
     @NonNull
     @NotNull
     @Override
-    public ProductAdapterGridViewViewPager.ProductViewHoder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listview_swipe_gridview, parent, false);
+    public ProductAdapterViewPager.ProductViewHoder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listview_swipe, parent, false);
         return new ProductViewHoder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ProductAdapterGridViewViewPager.ProductViewHoder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull ProductAdapterViewPager.ProductViewHoder holder, int position) {
         Product product = mProduct.get(position);
         if (product == null) {
             return;
@@ -80,11 +73,10 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
         holder.btnChiTiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ListSanPham.class);
+                Intent intent = new Intent(v.getContext(), ListSanPhamGridView.class);
                 v.getContext().startActivity(intent);
             }
         });
-
 
         holder.xoa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +84,7 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
 //                thongTin.Xoa(position);
 //                mInfoStudent.remove(holder.getAbsoluteAdapterPosition());
 //                notifyItemRemoved(holder.getAbsoluteAdapterPosition());
-                listSanPhamGridView.DeleteList(String.valueOf(position));
+                listSanPham.DeleteList(String.valueOf(position));
 
             }
 
@@ -101,11 +93,11 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
         holder.sua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listSanPhamGridView.Sua(position);
+                listSanPham.Sua(position);
 
             }
         });
- //setOnclick item recyclerview 1. đặt id cho layout được click 2. tạo biến toàn cục ở dưới và ánh xạ, xong setOnlick ở đây
+// setOnclick item recyclerview 1. đặt id cho layout được click 2. tạo biến toàn cục ở dưới và ánh xạ, xong setOnlick ở đây
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,16 +107,10 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
 //                    intent.putExtra("data", (Serializable) dataSend);
 //                    v.getContext().startActivity(intent); // dùng v.getContext() hoặc thongTin trong trường hợp này đều được
 //                }
-                listSanPhamGridView.XemChiTiet(position);
-
+                listSanPham.XemChiTiet(position);
             }
         });
-
-
     }
-
-
-
 
     @Override
     public int getItemCount() {
@@ -133,6 +119,34 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
         }
         return 0;
     }
+
+
+
+    public class ProductViewHoder extends RecyclerView.ViewHolder {
+        public SwipeRevealLayout swipeRevealLayout;
+        public LinearLayout linearLayout;
+        public TextView sua, xoa, id, tensp, giasp, mota;
+        public ImageView image;
+        private Button btnChiTiet;
+
+        public ProductViewHoder(@NonNull View itemView) {
+            super(itemView);
+
+            swipeRevealLayout = itemView.findViewById(R.id.Swipe_Layout);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.click_item);
+            sua = itemView.findViewById(R.id.btntvSua);
+            xoa = itemView.findViewById(R.id.btntvXoa);
+//            id = itemView.findViewById(R.id.tv_id);
+            tensp = itemView.findViewById(R.id.tv_ten);
+            giasp = itemView.findViewById(R.id.tv_gia);
+            mota = itemView.findViewById(R.id.tv_mota);
+            image = itemView.findViewById(R.id.id_image);
+            btnChiTiet=itemView.findViewById(R.id.btnChiTiet1);
+
+        }
+    }
+
+
 
     // getFilter để tìm kiếm
     @Override
@@ -165,29 +179,5 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
                 notifyDataSetChanged();
             }
         };
-    }
-
-    public class ProductViewHoder extends RecyclerView.ViewHolder {
-        public SwipeRevealLayout swipeRevealLayout;
-        public LinearLayout linearLayout;
-        public TextView sua, xoa, id, tensp, giasp, mota;
-        public ImageView image;
-        public Button btnChiTiet;
-
-        public ProductViewHoder(@NonNull View itemView) {
-            super(itemView);
-
-            swipeRevealLayout = itemView.findViewById(R.id.Swipe_Layout);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.click_item);
-            sua = itemView.findViewById(R.id.btntvSua);
-            xoa = itemView.findViewById(R.id.btntvXoa);
-//            id = itemView.findViewById(R.id.tv_id);
-            tensp = itemView.findViewById(R.id.tv_ten);
-            giasp = itemView.findViewById(R.id.tv_gia);
-            mota = itemView.findViewById(R.id.tv_mota);
-            image = itemView.findViewById(R.id.id_image);
-            btnChiTiet = itemView.findViewById(R.id.btnChiTiet);
-
-        }
     }
 }

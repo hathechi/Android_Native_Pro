@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ForgotPassword extends AppCompatActivity {
     Button btnForotpass, btnResendpassword;
-    LinearLayout layout_email, layout_enterpass;
+    LinearLayout layout_email;
     TextView tv_error_enterpass, tv_error_email;
     EditText etEmail, etPass;
 

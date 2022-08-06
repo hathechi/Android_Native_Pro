@@ -16,16 +16,16 @@
         android:layout_marginTop="30dp"
         app:srcCompat="@drawable/khi" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView7"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="POLYTECHNIC"-->
-<!--        android:textColor="#03F6E1"-->
-<!--        android:textSize="36dp"-->
-<!--        android:textStyle="bold" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView7"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="50dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="POLYTECHNIC"-->
+    <!--        android:textColor="#03F6E1"-->
+    <!--        android:textSize="36dp"-->
+    <!--        android:textStyle="bold" />-->
 
     <TextView
         android:id="@+id/textView8"
@@ -46,69 +46,76 @@
         android:textColor="#FFFFFF"
         android:textSize="16dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="0dp">
 
-
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/ID_login_home"
                 android:layout_width="180dp"
                 android:layout_height="60dp"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:backgroundTint="@drawable/state_button"
-                android:background="@drawable/radius_button"
                 android:layout_margin="12dp"
-                android:text="LOGIN" />
+                android:layout_weight="1"
+                android:background="@drawable/radius_button"
+                android:backgroundTint="@drawable/state_button"
+                android:text="LOGIN"
+                android:textColor="@color/white" />
 
 
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="60dp"-->
-<!--            app:cardBackgroundColor="#079BF6"-->
-<!--            app:cardCornerRadius="50dp"-->
-<!--            android:layout_margin="12dp"-->
-<!--            >-->
+            <!--        <androidx.cardview.widget.CardView-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="60dp"-->
+            <!--            app:cardBackgroundColor="#079BF6"-->
+            <!--            app:cardCornerRadius="50dp"-->
+            <!--            android:layout_margin="12dp"-->
+            <!--            >-->
 
-<!--            <Button-->
-<!--                android:id="@+id/ID_login_home"-->
-<!--                android:layout_width="180dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:backgroundTint="#079BF6"-->
+            <!--            <Button-->
+            <!--                android:id="@+id/ID_login_home"-->
+            <!--                android:layout_width="180dp"-->
+            <!--                android:layout_height="60dp"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:backgroundTint="#079BF6"-->
 
-<!--                android:text="LOGIN" />-->
+            <!--                android:text="LOGIN" />-->
 
-<!--        </androidx.cardview.widget.CardView>-->
+            <!--        </androidx.cardview.widget.CardView>-->
             <Button
                 android:id="@+id/ID_signup_home"
                 android:layout_width="180dp"
                 android:layout_height="60dp"
+                android:layout_margin="12dp"
                 android:layout_weight="1"
-                android:textColor="@color/white"
                 android:background="@drawable/radius_button"
                 android:backgroundTint="#00BFA5"
-                android:layout_margin="12dp"
-                android:text="SIGNUP" />
+                android:text="SIGNUP"
+                android:textColor="@color/white" />
 
 
+        </LinearLayout>
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text="- OR RIGISTER WITH - "
         android:textColor="@color/white"
-        android:textSize="14dp"
-        android:gravity="center"
-        android:layout_marginTop="20dp"/>
+        android:textSize="14dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -122,14 +129,14 @@
             android:layout_height="50dp"
             android:layout_marginLeft="80dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/emthree" />
+            app:srcCompat="@drawable/fb" />
 
         <ImageView
             android:id="@+id/imageButton2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/emtwo" />
+            app:srcCompat="@drawable/icontele" />
 
         <ImageView
             android:id="@+id/imageButton"
@@ -137,7 +144,7 @@
             android:layout_height="50dp"
             android:layout_marginRight="80dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/emone" />
+            app:srcCompat="@drawable/icontwit" />
     </LinearLayout>
 
 </LinearLayout>

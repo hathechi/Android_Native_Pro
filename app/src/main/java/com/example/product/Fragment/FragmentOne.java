@@ -10,17 +10,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -38,7 +44,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Objects;
 
 public class FragmentOne extends Fragment {
 
@@ -65,6 +70,10 @@ public class FragmentOne extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.activity_list_san_pham_grid_view, container, false);
 
+        setHasOptionsMenu(true);  //THêm dòng này để Set custom menu bar
+        //set nút back cho Activity
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Danh Sách Giày");
         //chạy SQLite
         ProductDAO DAO = new ProductDAO(view.getContext());
 
@@ -124,6 +133,10 @@ public class FragmentOne extends Fragment {
                             product.setTenSp(tensp);
                             product.setGiaSp(giasp);
                             product.setMoTA(mota);
+                            if (img == null) {
+                                Toast.makeText(v.getContext(), "NHẬP ĐỦ DỮ LIỆU", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             product.setImageSp(img);
                             dao.insertProduct(product);
                             //gọi lại hàm Change
@@ -139,6 +152,34 @@ public class FragmentOne extends Fragment {
         });
 
         return view;
+    }
+
+    public void XemChiTiet(int i) {
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
+        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+        //Nhúng layout vào dialog alert
+        View view = layoutInflater.inflate(R.layout.layout_chitiet, null);
+        builder.setView(view);
+        builder.show();
+
+        ImageView iv_chitiet = view.findViewById(R.id.id_image_chitiet);
+        TextView tvGia_chitiet = view.findViewById(R.id.tv_gia_chitiet);
+        Button btnBuy_chitiet = view.findViewById(R.id.btnBuy_chitiet);
+
+        dao = new ProductDAO(view.getContext());
+        List<Product> list = dao.getAll();
+
+        //đổi từ byte sang Bitmap
+        byte[] byte1 = list.get(i).getImageSp();
+        Log.i("buy", "XemChiTiet: " + byte1);
+
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byte1, 0, byte1.length);
+        Log.i("b", "bit map: " + bitmap);
+        iv_chitiet.setImageBitmap(bitmap);
+        tvGia_chitiet.setText(list.get(i).getGiaSp() + " $");
+
+
     }
 
     public void Sua(int posision) {
@@ -257,7 +298,7 @@ public class FragmentOne extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == -1 && data != null) {
             Uri uri = data.getData();
-            Log.i("1", "uri: "+uri);
+            Log.i("1", "uri: " + uri);
             try {
                 //thêm requireActivity() trước .getContentResolver() khi dùng trong fragment
                 InputStream inputStream = requireActivity().getContentResolver().openInputStream(uri);
@@ -273,7 +314,42 @@ public class FragmentOne extends Fragment {
                 e.printStackTrace();
             }
         }
-
     }
 
+    // Set custom menu bar
+    @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+//set chạy searchView
+        searchView = (androidx.appcompat.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                productAdapterGridView.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                productAdapterGridView.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
+
+    // bắt sự kiện cho nút trên Action Bar
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().finish();
+                break;
+            case R.id.item_logout:
+                getActivity().finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public EditText username, password;
-    public TextView forgotpass;
+    public TextView forgotpass, tvErrorUser, tvErrorPass;
     public CheckBox checkBox;
 
     @Override
@@ -37,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
         username = findViewById(R.id.etUserName);
         password = findViewById(R.id.etPassword);
-        TextView error = findViewById(R.id.tvError);
         checkBox = findViewById(R.id.cb_login);
         forgotpass = findViewById(R.id.forgotpassword);
-
+        tvErrorPass = findViewById(R.id.tvError_pass);
+        tvErrorUser = findViewById(R.id.tvError_user);
         Button signup = findViewById(R.id.btnRegister);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     FancyToast.makeText(MainActivity.this, "isChecked", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-                }else{
+                } else {
                     FancyToast.makeText(MainActivity.this, "UnChecked", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
@@ -88,15 +88,37 @@ public class MainActivity extends AppCompatActivity {
 
         //tạo Handler làm khoảng delay cho sự kiện
         Handler handler = new Handler();
-
-        if (user.equals("") || pass.equals("")) {
-            error.setText("KHÔNG BỎ TRỐNG DỮ LIỆU !");
+        if (user.equals("") && pass.equals("")) {
+            tvErrorUser.setText("KHÔNG BỎ TRỐNG USER !");
+            tvErrorPass.setText("KHÔNG BỎ TRỐNG PASSWORD !");
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    error.setText("");
+                    tvErrorUser.setText("USER NAME : ");
+                    tvErrorPass.setText("PASSWORD : ");
                 }
             }, 1500);
+            return;
+        }
+        if (user.equals("")) {
+            tvErrorUser.setText("KHÔNG BỎ TRỐNG USER !");
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tvErrorUser.setText("USER NAME : ");
+
+                }
+            }, 1500);
+        } else if (pass.equals("")) {
+            tvErrorPass.setText("KHÔNG BỎ TRỐNG PASSWORD !");
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tvErrorPass.setText("PASSWORD : ");
+                }
+            }, 1500);
+
 
         } else {
             RegisterDAO registerDAO = new RegisterDAO(this);
@@ -125,11 +147,10 @@ public class MainActivity extends AppCompatActivity {
 
                     }
 
-
                     //Chuyển trang
                     Intent intent1 = new Intent(this, ListSanPhamGridView.class);
                     startActivity(intent1);
-                    return;
+                   break;
                 } else {
                     error.setText("SAI TÀI KHOẢN HOẶC MẬT KHẨU!");
                     handler.postDelayed(new Runnable() {

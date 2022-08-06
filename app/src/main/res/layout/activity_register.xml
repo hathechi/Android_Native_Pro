@@ -157,8 +157,8 @@
                 android:hint="dd/mm/yyyy"
                 android:inputType="textPersonName"
                 android:paddingLeft="30dp"
-                android:textColorHint="#000"
-                app:backgroundTint="#fff" />
+                android:textColorHint="#C3C0C0"
+                app:backgroundTint="#FFFFFF" />
 
             <Button
                 android:id="@+id/btnChonngay"
@@ -220,7 +220,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="#D50000" />
+            android:textColor="#FFFFFF" />
+
+        <CheckBox
+            android:id="@+id/checkbox_regis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:buttonTint="#FFFFFF"
+            android:checked="false"
+            android:text="Đồng ý với điều khoản và dịch vụ "
+            android:textColor="@color/white">
+
+        </CheckBox>
 
 
         <Button
