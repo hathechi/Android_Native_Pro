@@ -87,13 +87,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         checkbox_regis.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     btnRegis.setEnabled(true);
-                    FancyToast.makeText(Register.this,"Bạn đã chấp nhận với các điều khoản, dịch vụ."
-                            ,FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();
-                }else{
-                    FancyToast.makeText(Register.this,"Bạn cần phải đồng ý với các điều khoản, dịch vụ."
-                            ,FancyToast.LENGTH_SHORT,FancyToast.ERROR,false).show();
+                    FancyToast.makeText(Register.this, "Bạn đã chấp nhận với các điều khoản, dịch vụ."
+                            , FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                } else {
+                    FancyToast.makeText(Register.this, "Bạn cần phải đồng ý với các điều khoản, dịch vụ."
+                            , FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                     btnRegis.setEnabled(false);
                 }
             }
@@ -112,9 +112,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     registerDAO = new RegisterDAO(this);
                     List<ListUser> list = registerDAO.getAll();
                     for (ListUser a : list) {
-                        if (username.equalsIgnoreCase(a.getUser())) {
+                        if (username.equalsIgnoreCase(a.getUser()) || email.equalsIgnoreCase(a.getEmail())) {
                             FancyToast.makeText(Register.this,
-                                    "TÊN TÀI KHOẢN ĐÃ TỒN TẠI !",
+                                    "TÊN TÀI KHOẢN, HOẶC EMAIL ĐÃ TỒN TẠI !",
                                     FancyToast.LENGTH_LONG,
                                     FancyToast.ERROR,
                                     false).show();
@@ -168,7 +168,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             }, 1500);
             return false;
         }
-        if (pass.length() <= 3 ||cfpass.length() <= 3) {
+        if (pass.length() <= 3 || cfpass.length() <= 3) {
             show_err.setText("PASSWORD PHẢI LỚN HƠN 3 KÍ TỰ !!");
             handler.postDelayed(new Runnable() {
                 @Override
