@@ -32,6 +32,7 @@ public class ProductDAO {
             product.setTenSp(cursor.getString(cursor.getColumnIndex("tensp")));
             product.setGiaSp(cursor.getFloat(cursor.getColumnIndex("giasp")));
             product.setMoTA(cursor.getString(cursor.getColumnIndex("mota")));
+            product.setThuongHieu(cursor.getString(cursor.getColumnIndex("thuonghieu")));
             product.setImageSp((cursor.getBlob(cursor.getColumnIndex("hinhsp"))));
 
             list.add(product);
@@ -58,6 +59,7 @@ public class ProductDAO {
         contentValues.put("tensp", product.getTenSp());
         contentValues.put("giasp", product.getGiaSp());
         contentValues.put("mota", product.getMoTA());
+        contentValues.put("thuonghieu", product.getThuongHieu());
         contentValues.put("hinhsp", product.getImageSp());
 
         return db.insert("product", null, contentValues);
@@ -71,6 +73,7 @@ public class ProductDAO {
         contentValues.put("tensp", product.getTenSp());
         contentValues.put("giasp", product.getGiaSp());
         contentValues.put("mota", product.getMoTA());
+        contentValues.put("thuonghieu", product.getThuongHieu());
         contentValues.put("hinhsp", product.getImageSp());
         return db.update("product", contentValues, "id = ?", new String[]{id});
     }

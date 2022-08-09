@@ -8,7 +8,7 @@
     app:dragEdge="right"
     app:mode="same_level"
 
-  >
+    >
 
 
     <!-- Your secondary layout here -->
@@ -19,21 +19,38 @@
 
         >
 
-        <TextView
-            android:id="@+id/btntvSua"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:id="@+id/btntvSua"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_edit" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
+            app:cardCornerRadius="15dp"
 
-            android:background="@drawable/icon_edit" />
+            >
 
-        <TextView
-            android:id="@+id/btntvXoa"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_action_name" />
+            <TextView
+                android:id="@+id/btntvXoa"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_action_name" />
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <!-- Your main layout here -->
@@ -41,10 +58,10 @@
         android:id="@+id/click_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:background="@drawable/radius_button"
-        android:padding="20dp"
-        android:backgroundTint="#37FF1FAC">
+        android:backgroundTint="#37FF1FAC"
+        android:orientation="horizontal"
+        android:padding="20dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -87,9 +104,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Tên Sản Phẩm"
+                    android:textColor="@color/black"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_gia"
@@ -98,10 +115,21 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="Giá"
+                    android:textColor="#FF0202"
                     android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:textColor="#FF0202"/>
+                    android:textStyle="bold" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_thuonghieu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="left"
+                android:text="Thương Hiệu"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,21 +142,21 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Mô Tả"
+                    android:textColor="@color/black"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnChiTiet1"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="buy"
+                    android:background="@drawable/radius_button"
                     android:backgroundTint="@drawable/state_button"
+                    android:text="buy"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
 
-                    android:background="@drawable/radius_button"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>

@@ -5,19 +5,20 @@ public class Product {
     private String tenSp;
     private Float giaSp;
     private String moTA;
+    private String ThuongHieu;
     private byte[] ImageSp;
 
 
     public Product() {
     }
 
-
-    public Product(int id, String tenSp, Float giaSp, String moTA, byte[] imageSp) {
+    public Product(int id, String tenSp, Float giaSp, String moTA, String thuongHieu, byte[] imageSp) {
         this.id = id;
         this.tenSp = tenSp;
         this.giaSp = giaSp;
         this.moTA = moTA;
-        this.ImageSp = imageSp;
+        ThuongHieu = thuongHieu;
+        ImageSp = imageSp;
     }
 
     public int getId() {
@@ -52,13 +53,19 @@ public class Product {
         this.moTA = moTA;
     }
 
+    public String getThuongHieu() {
+        return ThuongHieu;
+    }
+
+    public void setThuongHieu(String thuongHieu) {
+        ThuongHieu = thuongHieu;
+    }
+
     public byte[] getImageSp() {
         return ImageSp;
     }
 
     public void setImageSp(byte[] imageSp) {
-        this.ImageSp = imageSp;
+        ImageSp = imageSp;
     }
-
-
 }

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FF0973"
     android:orientation="vertical"
-    android:paddingBottom="50dp"
-    android:background="#FF0973">
+    android:paddingBottom="50dp">
+
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="30dp"
-        >
+        android:padding="30dp">
 
         <EditText
             android:id="@+id/etTensp_edit"
@@ -30,26 +31,49 @@
             android:id="@+id/etGiasp_edit"
             android:layout_width="match_parent"
 
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/botron_edittext"
             android:ems="10"
             android:hint="Giá Sản Phẩm"
             android:inputType="number"
+            android:paddingLeft="30dp" />
+
+        <LinearLayout
+            android:layout_width="347dp"
             android:layout_height="60dp"
-            android:background="@drawable/botron_edittext"
-            android:paddingLeft="30dp"
             android:layout_marginBottom="20dp"
-            />
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinnerAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+
+                />
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/btnAddThuongHieu"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+
+<!--                app:srcCompat="@drawable/icon_add" />-->
+        </LinearLayout>
+
         <EditText
             android:id="@+id/etMota_edit"
             android:layout_width="match_parent"
 
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+
+            android:background="@drawable/botron_edittext"
             android:ems="10"
             android:hint="Mô Tả"
-
-            android:layout_height="60dp"
-            android:background="@drawable/botron_edittext"
-            android:paddingLeft="30dp"
-            android:layout_marginBottom="20dp"
-            />
+            android:paddingLeft="30dp" />
 
         <Button
             android:id="@+id/btnChonhinh"
@@ -73,9 +97,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
-            android:textColor="@color/white"
-            android:backgroundTint="@drawable/state_button"
             android:background="@drawable/botron_edittext"
-            android:text="SỬA THÔNG TIN" />
+            android:backgroundTint="@drawable/state_button"
+            android:text="SỬA THÔNG TIN"
+            android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

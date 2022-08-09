@@ -55,6 +55,18 @@ public class ForgotPassword extends AppCompatActivity {
                         if ((etEmail.getText().toString().trim()).equalsIgnoreCase(listUser.getEmail())) {
                             FancyToast.makeText(ForgotPassword.this, "Email Hợp Lệ",
                                     FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                            //set thời gian 10s sau 1 lần nhấn để tránh spqm
+                            btnForotpass.setEnabled(false);
+                            FancyToast.makeText(ForgotPassword.this, "Bạn chỉ có thể gửi code sau mỗi 15 giây !",
+                                    FancyToast.LENGTH_LONG, FancyToast.WARNING, false).show();
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    btnForotpass.setEnabled(true);
+                                }
+                            }, 15000);
+
 
                             String input_email = etEmail.getText().toString().trim();
                             //gửi email code để xác nhận và lấy ra được số code random

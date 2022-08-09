@@ -20,15 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Product">
         <activity android:name=".ViewPaper">
-
-        </activity>
-        <activity android:name=".GalleryAndroid"></activity>
-        <activity android:name=".Onboarding.OnboardingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".GalleryAndroid"></activity>
+        <activity android:name=".Onboarding.OnboardingActivity">
+
         </activity>
         <activity android:name=".Loading"></activity>
         <activity

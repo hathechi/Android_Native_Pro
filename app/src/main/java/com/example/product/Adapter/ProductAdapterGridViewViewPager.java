@@ -75,6 +75,7 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
         holder.image.setImageBitmap(bitmap);
         holder.tensp.setText(product.getTenSp());
         holder.giasp.setText(product.getGiaSp() + " $");
+        holder.thuonghieu.setText(product.getThuongHieu());
         holder.mota.setText(product.getMoTA());
 
         holder.btnChiTiet.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +171,7 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
     public class ProductViewHoder extends RecyclerView.ViewHolder {
         public SwipeRevealLayout swipeRevealLayout;
         public LinearLayout linearLayout;
-        public TextView sua, xoa, id, tensp, giasp, mota;
+        public TextView sua, xoa, id, tensp, giasp, mota,thuonghieu;
         public ImageView image;
         public Button btnChiTiet;
 
@@ -185,6 +186,7 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
             tensp = itemView.findViewById(R.id.tv_ten);
             giasp = itemView.findViewById(R.id.tv_gia);
             mota = itemView.findViewById(R.id.tv_mota);
+            thuonghieu = itemView.findViewById(R.id.tv_thuonghieu);
             image = itemView.findViewById(R.id.id_image);
             btnChiTiet = itemView.findViewById(R.id.btnChiTiet);
 
