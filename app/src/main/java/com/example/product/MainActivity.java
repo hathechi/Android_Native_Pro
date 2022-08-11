@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //Ẩn thanh bar
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
         username = findViewById(R.id.etUserName);
         password = findViewById(R.id.etPassword);
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     //Chuyển trang
-                    Intent intent1 = new Intent(this, ListSanPhamGridView.class);
+                    Intent intent1 = new Intent(this, ViewPaper.class);
                     startActivity(intent1);
                    break;
                 } else {

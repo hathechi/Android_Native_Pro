@@ -149,7 +149,8 @@ public class ProductAdapterGridViewViewPager extends RecyclerView.Adapter<Produc
                     for (Product product : mProductSearch) {
                         if (product.getTenSp().toLowerCase().contains(Search.toLowerCase())
                                 || (product.getGiaSp()).toString().contains(Search.toLowerCase())
-                                || product.getMoTA().toLowerCase().contains(Search.toLowerCase())) {
+                                || product.getMoTA().toLowerCase().contains(Search.toLowerCase())
+                                || product.getThuongHieu().toLowerCase().contains(Search.toLowerCase())) {
                             list.add(product);
                         }
                     }

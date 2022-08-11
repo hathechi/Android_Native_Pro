@@ -14,7 +14,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String THUONGHIEU = "thuonghieu";
     public static final String HINH = "hinhsp";
     ///// Table Thương Hiệu
-    public static final String ID_THUONGHIEU = "id";
+    public static final String ID_THUONGHIEU = "id_thuonghieu";
     public static final String TEN_THUONGHIEU = "tenthuonghieu";
 
 

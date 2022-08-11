@@ -55,8 +55,8 @@ public class ListSanPham extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_san_pham);
-        getSupportActionBar().setTitle("Wellcome Recycerview");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("Wellcome Recycerview");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //chạy SQLite
         ProductDAO DAO = new ProductDAO(getBaseContext());
@@ -296,11 +296,11 @@ public class ListSanPham extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu3:
+            case R.id.item_dangky:
                 Intent intent = new Intent(this, MainActivity3.class);
                 startActivity(intent);
                 break;
-            case R.id.menu:
+            case R.id.item_dangnhap:
                 Toast.makeText(this, "Setting product !!!!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_logout:

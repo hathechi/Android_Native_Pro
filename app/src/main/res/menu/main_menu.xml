@@ -11,18 +11,18 @@
     app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item
-        android:id="@+id/menu"
-        android:title="Setting"
-        android:icon="@drawable/ic_action_name"
-        app:showAsAction="never"
-        android:orderInCategory="101"
-       />
-    <item
-        android:id="@+id/menu3"
-        android:title="MainActivity"
+        android:id="@+id/item_dangnhap"
+        android:title="Đăng Nhập"
         android:icon="@drawable/ic_action_name"
         app:showAsAction="never"
         android:orderInCategory="100"
+       />
+    <item
+        android:id="@+id/item_dangky"
+        android:title="Đăng Ký"
+        android:icon="@drawable/ic_action_name"
+        app:showAsAction="never"
+        android:orderInCategory="101"
         />
 
     <item

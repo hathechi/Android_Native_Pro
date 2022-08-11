@@ -67,6 +67,7 @@ public class FragmentTwo extends Fragment {
     Spinner spinnerAdd;
     int idSpin;
     String item_thuonghieu;
+    int id_thuonghieu;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -127,12 +128,13 @@ public class FragmentTwo extends Fragment {
                 spinnerAdd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        item_thuonghieu = spinnerAdd.getSelectedItem().toString();
+//                        item_thuonghieu = spinnerAdd.getSelectedItem().toString();
+                        List<ThuongHieu> listThuongHieu = thuongHieuDAO.getAll();
 
-                        List<ThuongHieu> spin = thuongHieuDAO.getAll();
-//                        idSpin = spin.get(position).getId();
-//                        thuongHieuDAO.delete(String.valueOf(idSpin));
-//                        getSpinerAdapter();
+                        if (listThuongHieu != null) {
+                            id_thuonghieu = listThuongHieu.get(position).getId();
+                            Log.i("id", "onItemSelected: " + id_thuonghieu);
+                        }
                     }
 
                     @Override
@@ -243,7 +245,7 @@ public class FragmentTwo extends Fragment {
                             product.setTenSp(tensp);
                             product.setGiaSp(giasp);
                             product.setMoTA(mota);
-                            product.setThuongHieu(item_thuonghieu);
+                            product.setThuongHieu(String.valueOf(id_thuonghieu));
                             if (img == null) {
                                 Toast.makeText(v.getContext(), "NHẬP ĐỦ DỮ LIỆU", Toast.LENGTH_SHORT).show();
                                 return;
@@ -379,7 +381,7 @@ public class FragmentTwo extends Fragment {
                     product.setTenSp(ten);
                     product.setGiaSp(Float.valueOf(gia));
                     product.setMoTA(mota);
-                    product.setThuongHieu(item_thuonghieu);
+                    product.setThuongHieu(String.valueOf(id_thuonghieu));
                     product.setImageSp(img);
                     Log.i("HTC", "onClick: " + product.getId() + "  " + id);
                     dao.updateProduct(product, String.valueOf(id));

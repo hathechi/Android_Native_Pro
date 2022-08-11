@@ -13,7 +13,7 @@ Button login,signup;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        getSupportActionBar().hide();
+
         login = findViewById(R.id.ID_login_home);
         signup = findViewById(R.id.ID_signup_home);
         login.setOnClickListener(new View.OnClickListener() {

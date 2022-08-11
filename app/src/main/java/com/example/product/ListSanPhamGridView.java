@@ -56,7 +56,7 @@ public class ListSanPhamGridView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_san_pham);
-        getSupportActionBar().setTitle("Danh Sách Giày");
+//        getSupportActionBar().setTitle("Danh Sách Giày");
         //set kích thước tiêu chuẩn cho blob sqlite// không có thì bị văng app khi hình có kích thước quá lớn
         try {
             Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
@@ -307,11 +307,11 @@ public class ListSanPhamGridView extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu3:
+            case R.id.item_dangky:
                 Intent intent = new Intent(this, MainActivity3.class);
                 startActivity(intent);
                 break;
-            case R.id.menu:
+            case R.id.item_dangnhap:
                 Intent intent1 = new Intent(this, ViewPaper.class);
                 startActivity(intent1);
                 break;

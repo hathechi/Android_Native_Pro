@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/icon_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_Login"
+            android:icon="@drawable/icon_sanpham"
+            android:title="Đăng Nhập" />
+        <item
+            android:id="@+id/nav_About"
+            android:icon="@drawable/icon_about"
+            android:title="About" />
+    </group>
+    <item android:title="Chia Sẻ">
+        <menu>
+            <item
+                android:id="@+id/nav_home1"
+                android:icon="@drawable/icon_add"
+                android:title="Youtube"
+                />
+            <item
+                android:id="@+id/nav_SanPham1"
+                android:icon="@drawable/icon_add"
+                android:title="Telegram" />
+        </menu>
+    </item>
+</menu>

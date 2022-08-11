@@ -29,7 +29,7 @@ public class ThuongHieuDAO {
         Cursor cursor = db.rawQuery(sql, selectArgs);
         while (cursor.moveToNext()) {
             ThuongHieu thuongHieu = new ThuongHieu();
-            thuongHieu.setId(cursor.getInt(cursor.getColumnIndex("id")));
+            thuongHieu.setId(cursor.getInt(cursor.getColumnIndex("id_thuonghieu")));
             thuongHieu.setTenthuonghieu(cursor.getString(cursor.getColumnIndex("tenthuonghieu")));
 
 
@@ -71,7 +71,7 @@ public class ThuongHieuDAO {
 
     public int delete(String id) {
         try {
-            return db.delete("thuonghieu", "id = ?", new String[]{id});
+            return db.delete("thuonghieu", "id_thuonghieu = ?", new String[]{id});
         } catch (Exception e) {
             e.printStackTrace();
         }

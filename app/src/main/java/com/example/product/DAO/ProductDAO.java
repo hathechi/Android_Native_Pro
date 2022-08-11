@@ -5,9 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 
 import com.example.product.JavaClass.Product;
+import com.example.product.JavaClass.ThuongHieu;
 import com.example.product.SQLite.DBhelper;
 
 import java.util.ArrayList;
@@ -32,9 +32,14 @@ public class ProductDAO {
             product.setTenSp(cursor.getString(cursor.getColumnIndex("tensp")));
             product.setGiaSp(cursor.getFloat(cursor.getColumnIndex("giasp")));
             product.setMoTA(cursor.getString(cursor.getColumnIndex("mota")));
-            product.setThuongHieu(cursor.getString(cursor.getColumnIndex("thuonghieu")));
+//            product.setThuongHieu(cursor.getString(cursor.getColumnIndex("thuonghieu")));
             product.setImageSp((cursor.getBlob(cursor.getColumnIndex("hinhsp"))));
-
+//            int id_thuonghieu = cursor.getInt(cursor.getColumnIndex("id_thuonghieu"));
+            String ten_thuonghieu= cursor.getString(cursor.getColumnIndex("tenthuonghieu"));
+            ThuongHieu thuongHieu = new ThuongHieu();
+//            thuongHieu.setId(id_thuonghieu);
+//            thuongHieu.setTenthuonghieu(ten_thuonghieu);
+            product.setThuongHieu(ten_thuonghieu);
             list.add(product);
         }
         return list;
@@ -47,7 +52,8 @@ public class ProductDAO {
     }
 
     public List<Product> getAll() {
-        String sql = "SELECT * FROM product";
+//        String sql = "SELECT * FROM product";
+        String sql = "SELECT id,tensp,giasp,mota,hinhsp,tenthuonghieu FROM product INNER JOIN thuonghieu on product.thuonghieu = thuonghieu.id_thuonghieu";
         return getList(sql);
     }
 
