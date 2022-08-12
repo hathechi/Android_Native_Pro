@@ -59,7 +59,7 @@ public class ViewPaper extends AppCompatActivity {
                         menuItem.setChecked(true);
                         int id = menuItem.getItemId();
                         if(id == R.id.nav_home){
-                            Intent intent = new Intent(ViewPaper.this,NavigationView.class);
+                            Intent intent = new Intent(getBaseContext(), com.example.product.NavigationView.class);
                             startActivity(intent);
                         }
                         // close drawer when item is tapped

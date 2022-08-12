@@ -36,13 +36,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.product.Adapter.ProductAdapterFragmentHome;
-import com.example.product.Adapter.ProductAdapterGridViewViewPager;
 import com.example.product.DAO.ProductDAO;
 import com.example.product.DAO.ThuongHieuDAO;
 import com.example.product.JavaClass.Product;
 import com.example.product.JavaClass.ThuongHieu;
 import com.example.product.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,6 +54,7 @@ import java.util.List;
 
 public class FragmentHome extends Fragment {
 
+    public static ArrayList<Product> listGiohang = new ArrayList<>();
     public List<Product> arrayList;
     ImageButton imgButton_add;
     RecyclerView recyclerView;
@@ -81,10 +82,6 @@ public class FragmentHome extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-
-
-
 
 
         //set nút back cho Activity
@@ -307,7 +304,15 @@ public class FragmentHome extends Fragment {
         iv_chitiet.setImageBitmap(bitmap);
         tvGia_chitiet.setText(list.get(i).getGiaSp() + " $");
 
+        btnBuy_chitiet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Product product = list.get(i);
+                listGiohang.add(product);
+                FancyToast.makeText(getContext(), "Thêm Vào Giỏ Hàng Thành Công", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+            }
+        });
     }
 
     public void Sua(int posision) {
@@ -496,5 +501,17 @@ public class FragmentHome extends Fragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void GioHang(int position) {
+        dao = new ProductDAO(getContext());
+        List<Product> list = dao.getAll();
+        Product product = list.get(position);
+        listGiohang.add(product);
+        FancyToast.makeText(getContext(), "Thêm Vào Giỏ Hàng Thành Công", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+        for (Product a : listGiohang) {
+            Log.i("list", "GioHang: " + a.getId() + a.getTenSp() + a.getThuongHieu() + a.getMoTA() + a.getGiaSp());
+        }
+
     }
 }

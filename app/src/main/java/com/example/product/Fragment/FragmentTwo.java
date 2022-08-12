@@ -28,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -82,7 +83,7 @@ public class FragmentTwo extends Fragment {
         View view = inflater.inflate(R.layout.activity_list_san_pham, container, false);
 
         setHasOptionsMenu(true);  //THêm dòng này để Set custom menu bar
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Thêm, Sửa Sản Phẩm");
 //chạy SQLite
         thuongHieuDAO = new ThuongHieuDAO(view.getContext());
 

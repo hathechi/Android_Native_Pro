@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,10 +12,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.product.Adapter.AdapterViewPagerHome;
+import com.example.product.Fragment.FragmentGioHang;
 import com.example.product.Fragment.FragmentHome;
-import com.example.product.Fragment.FragmentOne;
-import com.example.product.Fragment.FragmentTwo;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -77,6 +79,27 @@ public class NavigationView extends AppCompatActivity
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+
+
+        //bottom_navigation
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull @NotNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_sanpham_bottom:
+                        replaceFragment(new FragmentHome());
+                        break;
+                    case R.id.nav_giohang_bottom: {
+                        replaceFragment(new FragmentGioHang());
+                        break;
+                    }
+                }
+
+            }
+        });
+
     }
 
     // Set custom menu bar
@@ -97,14 +120,15 @@ public class NavigationView extends AppCompatActivity
                 finish();
                 break;
             case R.id.item_logout:
-                finish();
+                Intent intent = new Intent(NavigationView.this, MainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.item_dangnhap:
-               Intent intent = new Intent(NavigationView.this,MainActivity.class);
-               startActivity(intent);
+                Intent intent2 = new Intent(NavigationView.this, MainActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.item_dangky:
-                Intent intent1 = new Intent(NavigationView.this,Register.class);
+                Intent intent1 = new Intent(NavigationView.this, Register.class);
                 startActivity(intent1);
                 break;
         }
@@ -125,12 +149,13 @@ public class NavigationView extends AppCompatActivity
                 replaceFragment(new FragmentHome());
                 currentFragment = FRAGMENT_HOME;
             }
-        }else if(id == R.id.nav_Login){
+        } else if (id == R.id.nav_Login) {
 
-            Intent intent= new Intent(NavigationView.this,Home.class);
+            Intent intent = new Intent(NavigationView.this, Home.class);
             startActivity(intent);
         }
         return false;
 
     }
+
 }

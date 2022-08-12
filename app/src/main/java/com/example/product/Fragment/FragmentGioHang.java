@@ -32,17 +32,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.product.Adapter.ProductAdapterGridViewViewPager;
+import com.example.product.Adapter.ProductAdapterFragmentGioHang;
 import com.example.product.DAO.ProductDAO;
 import com.example.product.DAO.ThuongHieuDAO;
 import com.example.product.JavaClass.Product;
 import com.example.product.JavaClass.ThuongHieu;
 import com.example.product.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -52,28 +51,28 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentOne extends Fragment {
+public class FragmentGioHang extends Fragment {
 
     public List<Product> arrayList;
     ImageButton imgButton_add;
     RecyclerView recyclerView;
-    ProductAdapterGridViewViewPager productAdapterGridView;
+    ProductAdapterFragmentGioHang productAdapterViewPager;
     ImageView iv_view;
     Bitmap bitmap;
     Uri uri;
     byte[] img;
     ProductDAO dao;
     ThuongHieuDAO thuongHieuDAO;
-    androidx.appcompat.widget.SearchView searchView; // khai báo SearchView
+    SearchView searchView; // khai báo SearchView
     Spinner spinnerAdd;
     int idSpin;
     String item_thuonghieu;
     int id_thuonghieu;
+    ArrayList<Product> list1 = FragmentHome.listGiohang;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -81,15 +80,14 @@ public class FragmentOne extends Fragment {
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.activity_list_san_pham_grid_view, container, false);
-
-
-        //set nút back cho Activity
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Thêm, Sửa Sản Phẩm");
-        //chạy SQLite
+        View view = inflater.inflate(R.layout.fragment_giohang, container, false);
+        for (Product a : list1) {
+            Log.i("list1", "GioHang: " + a.getId() + a.getTenSp() + a.getThuongHieu() + a.getMoTA() + a.getGiaSp());
+        }
+        setHasOptionsMenu(true);  //THêm dòng này để Set custom menu bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Giỏ Hàng Của Bạn");
+//chạy SQLite
         thuongHieuDAO = new ThuongHieuDAO(view.getContext());
-
 
 //lấy dữ liệu từ database
         dao = new ProductDAO(view.getContext());
@@ -100,178 +98,174 @@ public class FragmentOne extends Fragment {
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //        recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
-        productAdapterGridView = new ProductAdapterGridViewViewPager(this, list);
-        recyclerView.setAdapter(productAdapterGridView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        productAdapterViewPager = new ProductAdapterFragmentGioHang(this, list1);
+        recyclerView.setAdapter(productAdapterViewPager);
         registerForContextMenu(recyclerView);
         // tạo đường gạch ngang giữa những item trong recyclerview
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
         imgButton_add = view.findViewById(R.id.imgButton_add);
-        imgButton_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View dialogsheetview = LayoutInflater.from(v.getContext()).inflate(R.layout.add_listview, null);
-                BottomSheetDialog dialog = new BottomSheetDialog(v.getContext());
-                dialog.setContentView(dialogsheetview);
-                dialog.show();
-
-                Button btnAdd = dialogsheetview.findViewById(R.id.btnAdd);
-                EditText etTensp = dialogsheetview.findViewById(R.id.etTensp);
-                EditText etGiasp = dialogsheetview.findViewById(R.id.etGia);
-                EditText etMota = dialogsheetview.findViewById(R.id.etMota);
-                iv_view = dialogsheetview.findViewById(R.id.iv_view);
-
-                //Spinner
-                spinnerAdd = dialogsheetview.findViewById(R.id.spinnerAdd);
-
-
-                //gọi lại adapter Spiner
-                getSpinerAdapter();
-
-                spinnerAdd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                        item_thuonghieu = spinnerAdd.getSelectedItem().toString();
-
-
-                        List<ThuongHieu> listThuongHieu = thuongHieuDAO.getAll();
-
-                        if (listThuongHieu != null) {
-                            id_thuonghieu = listThuongHieu.get(position).getId();
-                            Log.i("id", "onItemSelected: " + id_thuonghieu);
-                        }
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-
-
-                ImageButton btnAddThuongHieu = dialogsheetview.findViewById(R.id.btnAddThuongHieu);
-                btnAddThuongHieu.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
-                        LayoutInflater layoutInflater = FragmentOne.this.getLayoutInflater();
-                        //Nhúng layout vào dialog alert
-                        View view = layoutInflater.inflate(R.layout.layout_dialog_addthuonghieu, null);
-                        builder.setView(view);
-                        builder.show();
-                        //Ánh xạ
-                        EditText etThuongHieu = view.findViewById(R.id.etThuongHieu);
-                        Button btnAddThuongHieu_dialog = view.findViewById(R.id.btnAddThuongHieu_dialog);
-                        btnAddThuongHieu_dialog.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String tenThuongHieu = etThuongHieu.getText().toString().toUpperCase();
-                                if (tenThuongHieu.isEmpty()) {
-                                    FancyToast.makeText(getContext(), "Chưa Nhập Tên Thương Hiệu ! ",
-                                            FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                                } else {
-
-                                    ThuongHieu thuongHieu = new ThuongHieu();
-                                    thuongHieu.setTenthuonghieu(tenThuongHieu);
-                                    thuongHieuDAO.insertThuongHieu(thuongHieu);
-
-                                    FancyToast.makeText(getContext(), "Thêm Thành Công !",
-                                            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-                                    //gọi lại adapter Spiner
-                                    getSpinerAdapter();
-                                }
-                            }
-                        });
-                    }
-                });
-
-                ImageButton btnXoaThuongHieu = dialogsheetview.findViewById(R.id.btnXoaThuongHieu);
-                btnXoaThuongHieu.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Tạo dialog để hỏi người dùng
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setMessage("BẠN CÓ MUỐN XÓA TÊN THƯƠNG HIỆU CUỐI CÙNG NÀY? ");
-                        builder.setPositiveButton("CÓ", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ProgressDialog progressDialog = ProgressDialog.show(getContext(), "Chờ Chút", "Xong ngay đây !!", true);
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        progressDialog.dismiss();
-                                    }
-                                }, 500);
-
-                                List<ThuongHieu> spin = thuongHieuDAO.getAll();
-                                idSpin = spin.get(spin.size() - 1).getId();
-                                Log.i("idspin", "onClick: " + idSpin);
-                                thuongHieuDAO.delete(String.valueOf(idSpin));
-
-//set lại dữ liệu từ database lên spinner
-                                getSpinerAdapter();
-
-                            }
-                        });
-
-                        builder.setNegativeButton("KHÔNG", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                        builder.show();
-
-                    }
-                });
-                //btn CHọn hình
-                Button btnTest = dialogsheetview.findViewById(R.id.btnChonhinh);
-                btnTest.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");
-                        startActivityForResult(intent, 1);
-                    }
-                });
-
-
-                btnAdd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String tensp = etTensp.getText().toString();
-                        Float giasp = Float.valueOf(etGiasp.getText().toString());
-                        String mota = etMota.getText().toString();
-                        if (tensp.isEmpty() || giasp == 0 || mota.isEmpty()) {
-                            FancyToast.makeText(getContext(),"Chưa Nhập Đủ Dữ Liệu !",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
-                        } else {
-                            ProductDAO dao = new ProductDAO(v.getContext());
-                            Product product = new Product();
-                            product.setTenSp(tensp);
-                            product.setGiaSp(giasp);
-                            product.setMoTA(mota);
-                            product.setThuongHieu(String.valueOf(id_thuonghieu));
-
-                            if (img == null) {
-                                FancyToast.makeText(getContext(),"Chưa Chọn Hình !",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
-                                return;
-                            }
-                            product.setImageSp(img);
-                            dao.insertProduct(product);
-                            FancyToast.makeText(getContext(),"Thêm Thành Công",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
-                            //gọi lại hàm Change
-                            setChanged();
-                        }
-
-                    }
-                });
-
-
-            }
-
-        });
+//        imgButton_add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                View dialogsheetview = LayoutInflater.from(v.getContext()).inflate(R.layout.add_listview, null);
+//                BottomSheetDialog dialog = new BottomSheetDialog(v.getContext());
+//                dialog.setContentView(dialogsheetview);
+//                dialog.show();
+//
+//                Button btnAdd = dialogsheetview.findViewById(R.id.btnAdd);
+//                EditText etTensp = dialogsheetview.findViewById(R.id.etTensp);
+//                EditText etGiasp = dialogsheetview.findViewById(R.id.etGia);
+//                EditText etMota = dialogsheetview.findViewById(R.id.etMota);
+//                iv_view = dialogsheetview.findViewById(R.id.iv_view);
+//
+//                //Spinner
+//                spinnerAdd = dialogsheetview.findViewById(R.id.spinnerAdd);
+//
+//                //gọi lại adapter Spiner
+//                getSpinerAdapter();
+//
+//
+//                spinnerAdd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+////                        item_thuonghieu = spinnerAdd.getSelectedItem().toString();
+//                        List<ThuongHieu> listThuongHieu = thuongHieuDAO.getAll();
+//
+//                        if (listThuongHieu != null) {
+//                            id_thuonghieu = listThuongHieu.get(position).getId();
+//                            Log.i("id", "onItemSelected: " + id_thuonghieu);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent) {
+//
+//                    }
+//                });
+//
+//                ImageButton btnAddThuongHieu = dialogsheetview.findViewById(R.id.btnAddThuongHieu);
+//                btnAddThuongHieu.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
+//                        LayoutInflater layoutInflater = FragmentGioHang.this.getLayoutInflater();
+//                        //Nhúng layout vào dialog alert
+//                        View view = layoutInflater.inflate(R.layout.layout_dialog_addthuonghieu, null);
+//                        builder.setView(view);
+//                        builder.show();
+//                        //Ánh xạ
+//                        EditText etThuongHieu = view.findViewById(R.id.etThuongHieu);
+//                        Button btnAddThuongHieu_dialog = view.findViewById(R.id.btnAddThuongHieu_dialog);
+//                        btnAddThuongHieu_dialog.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                String tenThuongHieu = etThuongHieu.getText().toString().toUpperCase();
+//                                if (tenThuongHieu.isEmpty()) {
+//                                    FancyToast.makeText(getContext(), "Chưa Nhập Tên Thương Hiệu ! ",
+//                                            FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+//                                } else {
+//
+//                                    ThuongHieu thuongHieu = new ThuongHieu();
+//                                    thuongHieu.setTenthuonghieu(tenThuongHieu);
+//                                    thuongHieuDAO.insertThuongHieu(thuongHieu);
+//
+//                                    FancyToast.makeText(getContext(), "Thêm Thành Công !",
+//                                            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+//                                    //gọi lại adapter Spiner
+//                                    getSpinerAdapter();
+//                                }
+//                            }
+//                        });
+//                    }
+//                });
+//
+//                ImageButton btnXoaThuongHieu = dialogsheetview.findViewById(R.id.btnXoaThuongHieu);
+//                btnXoaThuongHieu.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //Tạo dialog để hỏi người dùng
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                        builder.setMessage("BẠN CÓ MUỐN XÓA TÊN THƯƠNG HIỆU CUỐI CÙNG NÀY? ");
+//                        builder.setPositiveButton("CÓ", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                ProgressDialog progressDialog = ProgressDialog.show(getContext(), "Chờ Chút", "Xong ngay đây !!", true);
+//                                Handler handler = new Handler();
+//                                handler.postDelayed(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        progressDialog.dismiss();
+//                                    }
+//                                }, 500);
+//
+//                                List<ThuongHieu> spin = thuongHieuDAO.getAll();
+//                                idSpin = spin.get(spin.size() - 1).getId();
+//
+//                                thuongHieuDAO.delete(String.valueOf(idSpin));
+//
+////set lại dữ liệu từ database lên spinner
+//                                getSpinerAdapter();
+//
+//                            }
+//                        });
+//
+//                        builder.setNegativeButton("KHÔNG", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                            }
+//                        });
+//                        builder.show();
+//
+//                    }
+//                });
+//
+//                //btn CHọn hình
+//                Button btnTest = dialogsheetview.findViewById(R.id.btnChonhinh);
+//                btnTest.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(Intent.ACTION_PICK);
+//                        intent.setType("image/*");
+//                        startActivityForResult(intent, 1);
+//                    }
+//                });
+//
+//
+//                btnAdd.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        String tensp = etTensp.getText().toString();
+//                        Float giasp = Float.valueOf(etGiasp.getText().toString());
+//                        String mota = etMota.getText().toString();
+//                        if (tensp.isEmpty() || giasp == 0 || mota.isEmpty()) {
+//                            Toast.makeText(v.getContext(), "NHẬP ĐỦ DỮ LIỆU", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            ProductDAO dao = new ProductDAO(v.getContext());
+//                            Product product = new Product();
+//                            product.setTenSp(tensp);
+//                            product.setGiaSp(giasp);
+//                            product.setMoTA(mota);
+//                            product.setThuongHieu(String.valueOf(id_thuonghieu));
+//                            if (img == null) {
+//                                Toast.makeText(v.getContext(), "NHẬP ĐỦ DỮ LIỆU", Toast.LENGTH_SHORT).show();
+//                                return;
+//                            }
+//                            product.setImageSp(img);
+//                            dao.insertProduct(product);
+//                            //gọi lại hàm Change
+//                            setChanged();
+//                        }
+//
+//                    }
+//                });
+//
+//
+//            }
+//
+//        });
 
         return view;
     }
@@ -348,6 +342,7 @@ public class FragmentOne extends Fragment {
 
             }
         });
+
         iv_view = dialogsheetview.findViewById(R.id.iv_view);
         //btn CHọn hình
         Button btnTest = dialogsheetview.findViewById(R.id.btnChonhinh);
@@ -439,9 +434,9 @@ public class FragmentOne extends Fragment {
     private void setChanged() {
         dao = new ProductDAO(getContext());
         List<Product> list = dao.getAll();
-        productAdapterGridView = new ProductAdapterGridViewViewPager(this, list);
-        recyclerView.setAdapter(productAdapterGridView);
-        productAdapterGridView.notifyDataSetChanged();
+        productAdapterViewPager = new ProductAdapterFragmentGioHang(this, list);
+        recyclerView.setAdapter(productAdapterViewPager);
+        productAdapterViewPager.notifyDataSetChanged();
     }
 
     //lấy dữ liệu hình từ máy
@@ -466,26 +461,27 @@ public class FragmentOne extends Fragment {
                 e.printStackTrace();
             }
         }
-    }
 
+    }
 
     // Set custom menu bar
     @Override
     public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+
         inflater.inflate(R.menu.main_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
 //set chạy searchView
-        searchView = (androidx.appcompat.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                productAdapterGridView.getFilter().filter(query);
+                productAdapterViewPager.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                productAdapterGridView.getFilter().filter(newText);
+                productAdapterViewPager.getFilter().filter(newText);
                 return false;
             }
         });
